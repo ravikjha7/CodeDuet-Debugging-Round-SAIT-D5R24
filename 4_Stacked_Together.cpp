@@ -11,12 +11,16 @@ class Node
 public:
     int data;
     Node *next;
+	Node(int val) {
+		data = val;
+		next = NULL;
+	}
 };
 
 class Stack
 {
 public:
-    Node *top;
+    Node *top = NULL;
     void display();
     void push();
     void pop();
@@ -26,13 +30,14 @@ public:
 // To display the values present in stack or display "Empty Stack" if stack is empty
 void Stack ::display()
 {
+	// cout << "Aya" << endl;
     if (top == NULL)
     {
         cout << "Empty Stack\n";
     }
     else
     {
-        Node *p;
+        Node *p = top;
 
         while (p)
         {
@@ -45,17 +50,15 @@ void Stack ::display()
 // Push values in the stack
 void Stack ::push()
 {
-    Node *p;
-    if (top)
-    {
-        cout << "Enter data: ";
-        cin >> p->data;
-        p->next = top;
-        top = p;
-        display();
-    }
-    else
-        cout << "Stack Overflow\n";
+    // Node *p;
+
+	int x;
+    cout << "Enter data: ";
+    cin >> x;
+	Node* p = new Node(x);
+    p->next = top;
+    top = p;
+    display();
 }
 
 // Pop values in the stack
@@ -83,11 +86,16 @@ void Stack::peek()
         int x;
         cin >> x;
         Node *p = top;
-        for (int i = 1; p && i <= x; i++, p = p->next)
+		int i = 1;
+        for (i = 1; p && i <= x; i++, p = p->next)
         {
             if (i == x)
                 cout << p->data << endl;
         }
+
+		if(i < x) {
+			cout << "Wrong Index" << endl;
+		}
     }
 }
 
@@ -97,7 +105,7 @@ int main()
     while (1)
     {
         cout << "MENU: \n1.display\n2.push\n3.pop\n4.peek\n";
-        char choice;
+        int choice;
         cin >> choice;
         switch (choice)
         {
@@ -108,13 +116,13 @@ int main()
             s1.push();
             break;
         case 3:
-            s1.peek();
-            break;
-        case 4:
             s1.pop();
             break;
+        case 4:
+            s1.peek();
+            break;
         default:
-            return 0;
+            break;
         }
     }
     return 0;
