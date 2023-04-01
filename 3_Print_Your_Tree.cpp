@@ -12,8 +12,8 @@ class Node{
     Node *left, *right;
 
     Node(int data) {
-      this.data = data;
-      this.left = this.right = NULL;
+      this->data = data;
+      this->left = this->right = NULL;
     }
 
     // Function to create a node.
@@ -22,14 +22,27 @@ class Node{
         return new Node(value);
       }
 
-      if(value < root.data) {
-        root.left = add(value, root);
+      if(value < root->data) {
+        root->left = add(root->left, value);
       }
       else{
-        root.right = add(value, root);
+        root->right = add(root->right, value);
       }
+
+	  return root;
     }
 };
+
+void preOrder(Node* root, vector<int> &ans) {
+
+	if(root == NULL) return;
+
+	ans.push_back(root->data);
+	preOrder(root->left, ans);
+	preOrder(root->right, ans);
+	
+
+}
 
 // Function to return preorder traversal of binary tree.
 vector<int> preorder(Node* root) {
@@ -38,23 +51,7 @@ vector<int> preorder(Node* root) {
       return ans;
   }
 
-  queue<Node*> stk;
-  stk.push(root);
-
-  while(!stk.empty()){
-      Node* temp = stk.front();
-      stk.pop();
-
-      if(temp->left){
-          stk.push(temp->left);
-      }
-      if(temp->right){
-          stk.push(temp->right);
-      }
-
-      ans.push_back(temp->data);
-  }
-
+  preOrder(root, ans);
   return ans;
 }
 
@@ -77,7 +74,7 @@ vector<int> postorderTraversal(Node* root) {
         if(temp->left){
             q.push(temp->left);
         }
-        ans.push_back(temp->val);
+        ans.push_back(temp->data);
     }
     reverse(ans.begin(), ans.end());
     return ans;
@@ -87,22 +84,28 @@ int main()
 {
   
   Node* root = NULL;
-  Node bt;
+  Node* bt;
 
-  root = bt.add(12, root);
-  root = bt.add(13, root);
-  root = bt.add(11, root);
-  root = bt.add(10, root);
-  root = bt.add(9, root);
+  root = bt->add(root, 12);
+  root = bt->add(root, 13);
+//   cout << "WOW" << endl;
+  root = bt->add(root, 11);
+  root = bt->add(root, 10);
+  root = bt->add(root, 9);
+
+  
 
   auto ans1 = preorder(root);
   for(auto itr:ans1) {
     cout<<itr<<" ";
   }
 
+  cout << endl;
+
   auto ans2 = postorderTraversal(root);
   for(auto itr:ans2) {
     cout<<itr<<" ";
   }
+  cout << endl;
   return 0;
 }
