@@ -6,7 +6,7 @@
 
 // Following code contains both syntax and logical errors.
 
-#include <iostream>
+#include <bits/stdc++.h>
 #include <string>
 #include <list>
 using namespace std;
@@ -30,6 +30,8 @@ void operator<<(ostream &COUT, YoutubeChannel &ytChannel)
     COUT << "Subcribers: " << ytChannel.SubscribersCount << endl;
 };
 
+
+
 class MyCollection
 {
 public:
@@ -42,7 +44,12 @@ public:
 
     void operator-=(YoutubeChannel &channel)
     {
-        this->myChannels.remove(channel);
+        list<YoutubeChannel> newOne;
+		for(auto i : myChannels) {
+			if(i.Name == channel.Name && i.SubscribersCount == channel.SubscribersCount) continue;
+			newOne.push_back(i);
+		}
+		myChannels = newOne;
     }
 };
 
@@ -50,7 +57,7 @@ void operator<<(ostream &COUT, MyCollection &myCollection)
 {
     for (YoutubeChannel ytchannel : myCollection.myChannels)
     {
-        COUT << ytchannel << endl;
+        COUT << ytchannel.Name << endl;
     }
 }
 
@@ -60,7 +67,8 @@ int main()
     YoutubeChannel yt1 = YoutubeChannel("TechFusion", 5000);
     YoutubeChannel yt2 = YoutubeChannel("SAIT", 6000);
 
-    cout << yt1 << yt2;
+    cout << yt1;
+	cout << yt2;
     cout << endl;
 
     MyCollection myCollection;
